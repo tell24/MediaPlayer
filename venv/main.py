@@ -53,6 +53,9 @@ def login():
       if user == "Get Volume":
         rep = getInfo(0)
         return render_template("index.html", station=rep)
+      if user == "Set Volume":
+        rep = setOption(2)
+        return render_template("index.html", station=rep)
       if user == "Get URL":
         rep = getInfo(1)
         return render_template("index.html", station=rep)
@@ -91,7 +94,6 @@ def setPower(p):
         return e
     return response
 
-
 def getPower():
     header_bytes = power_headers.format(
     Power = "?P"
@@ -102,7 +104,7 @@ def getPower():
     try:
         s.connect(('192.168.0.47', 8102))
         s.send(payload);
-        time.sleep(1)
+        time.sleep(2)
         response = s.recv(1024).decode()
         print ("N:",response)
         s.close()
@@ -147,6 +149,25 @@ def setOption(option):
                 content_length=len(body_bytes),
                 host=str(host) + ":" + str(AV_port)
             ).encode('iso-8859-1')
+        else:
+            if option == 2:
+                body = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\
+                   <s:Envelope xmlns:s=\"http://schemas.xmlsoap.org/soap/envelope/\" s:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\">\
+                   <s:Body>\
+                   <u:SetVolume xmlns:u=\"urn:schemas-upnp-org:service:RenderingControl:1\">\
+                   <InstanceID>0</InstanceID>\
+                   <Channel>Master</Channel>\
+                   <DesiredVolume>10</DesiredVolume>\
+                   </u:SetVolume>\
+                   </s:Body>\
+                   </s:Envelope>"
+                body_bytes = body.encode('ascii')
+                header_bytes = control_headers.format(
+                Rendering = "RenderingControl:1#",
+                option = "SetVolume\"",
+                content_length=len(body_bytes),
+                host=str(host) + ":" + str(AV_port)
+                ).encode('iso-8859-1')
     payload = header_bytes + body_bytes
     response = ''
     s = socket.socket()
@@ -181,7 +202,7 @@ def getInfo(type):
             <s:Body>\
             <u:GetVolume xmlns:u=\"urn:schemas-upnp-org:service:RenderingControl:1\">\
             <InstanceID>0</InstanceID>\
-            <Channel>Master</Channel>\
+            <Channel>master</Channel>\
             </u:GetVolume>\
             </s:Body>\
             </s:Envelope>"
