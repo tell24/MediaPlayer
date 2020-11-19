@@ -1,0 +1,55 @@
+<!doctype html>
+<html>
+<head>
+    <title>MediaPlayer</title>
+    <style>
+          .btn-group button {
+          background-color: #4CAF50; /* Green background */
+          border: 1px solid green; /* Green border */
+          color: white; /* White text */
+          padding: 10px 24px; /* Some padding */
+          cursor: pointer; /* Pointer/hand icon */
+          display: block; /* Make the buttons appear below each other */
+          border-radius: 50px;
+          width: 250px;
+          margin-bottom: 10px;
+          font-size: 25px;
+          }
+
+          .input-group input{
+          background-color: #4CAF50; /* Green background */
+          border: 1px solid green; /* Green border */
+          color: white; /* White text */
+          padding: 10px 24px; /* Some padding */
+          cursor: pointer; /* Pointer/hand icon */
+          display: block; /* Make the buttons appear below each other */
+          border-radius: 50px;
+          width: 250px;
+          margin-bottom: 10px;
+          font-size: 25px;
+          }
+
+          .input-group input:not(:last-child) {
+          border-bottom: none; /* Prevent double borders */
+          }
+
+    </style>
+</head>
+<body>
+<h1> Radio Station</h1>
+<div class="input-group">
+    <form action="#" method="post">
+        <p><input type="submit" value="Radio Two" name="nm"/></p>
+        <p><input type="submit" value="Radio 5 Live" name="nm"/></p>
+        <p><input type="submit" value="Radio Bristol" name="nm"/></p>
+        <p><input type="submit" value="Get Volume" name="nm"/></p>
+        <p><input type="submit" value="Get URL" name="nm"/></p>
+        <p><input type="submit" value="GetPower" name="nm"/></p>
+        <p><input type="submit" value="Power On" name="nm"/></p>
+        <p><input type="submit" value="Power Off" name="nm"/></p>
+    </form>
+</div>
+<label >{{station}}</label>
+
+</body>
+</html>
