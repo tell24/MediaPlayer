@@ -122,8 +122,8 @@ def setOption(option):
         <s:Body>\
         <u:SetAVTransportURI xmlns:u=\"urn:schemas-upnp-org:service:AVTransport:1\">\
         <InstanceID>0</InstanceID>\
-        <CurrentURI>http://bbcmedia.ic.llnwd.net/stream/bbcmedia_radio2_mf_p</CurrentURI>\
-        <CurrentURIMetaData></CurrentURIMetaData>\
+        <CurrentURI>\"http://bbcmedia.ic.llnwd.net/stream/bbcmedia_radio2_mf_p\"</CurrentURI>\
+         <CurrentURIMetaData>&lt;DIDL-Lite xmlns=\"urn:schemas-upnp-org:metadata-1-0/DIDL-Lite/\" xmlns:upnp=\"urn:schemas-upnp-org:metadata-1-0/upnp/\" xmlns:dc=\"http://purl.org/dc/elements/1.1/\" xmlns:sec=\"http://www.sec.co.kr/\"&gt;&lt;item id=\"f-0\" parentID=\"0\" restricted=\"0\"&gt;&lt;dc:title&gt;Video&lt;/dc:title&gt;&lt;dc:creator&gt;vGet&lt;/dc:creator&gt;&lt;upnp:class&gt;object.item.videoItem&lt;/upnp:class&gt;&lt;res protocolInfo=\"http-get:*:video/mp4:DLNA.ORG_OP=01;DLNA.ORG_CI=0;DLNA.ORG_FLAGS=01700000000000000000000000000000\" sec:URIType=\"public\"&gt;$URI&lt;/res&gt;&lt;/item&gt;&lt;/DIDL-Lite&gt;</CurrentURIMetaData>\
         </u:SetAVTransportURI>\
         </s:Body>\
         </s:Envelope>"
@@ -141,6 +141,7 @@ def setOption(option):
             <s:Body>\
             <u:Play xmlns:u=\"urn:schemas-upnp-org:service:AVTransport:1\">\
             <InstanceID>0</InstanceID>\
+            <Speed>1</Speed>\
             </u:Play>\
             </s:Body>\
             </s:Envelope>"
