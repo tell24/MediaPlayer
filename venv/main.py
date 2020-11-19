@@ -42,7 +42,6 @@ def login():
         rep = "R2"
         setOption(0)
         setOption(1)
-
         return render_template("index.html", station=rep)
       if user == "Radio 5 Live":
         rep = "R5"
@@ -56,7 +55,10 @@ def login():
       if user == "Set Volume":
         rep = setOption(2)
         return render_template("index.html", station=rep)
-      if user == "Get URL":
+      if user == "Set URI":
+        rep = setOption(0)
+        return render_template("index.html", station=rep)
+      if user == "Get URI":
         rep = getInfo(1)
         return render_template("index.html", station=rep)
       if user == "GetPower":
@@ -188,33 +190,42 @@ def getInfo(type):
     body = ""
     if type == 0:
         body = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\
-        <s:Envelope xmlns:s=\"http://schemas.xmlsoap.org/soap/envelope/\" s:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\">\
-        <s:Body>\
-        <u:GetVolume xmlns:u=\"urn:schemas-upnp-org:service:RenderingControl:1\">\
-        <InstanceID>0</InstanceID>\
-        <Channel>Master</Channel>\
-        </u:GetVolume>\
-        </s:Body>\
-        </s:Envelope>"
-    else:
-        body = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\
             <s:Envelope xmlns:s=\"http://schemas.xmlsoap.org/soap/envelope/\" s:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\">\
             <s:Body>\
             <u:GetVolume xmlns:u=\"urn:schemas-upnp-org:service:RenderingControl:1\">\
             <InstanceID>0</InstanceID>\
-            <Channel>master</Channel>\
+            <Channel>Master</Channel>\
             </u:GetVolume>\
             </s:Body>\
             </s:Envelope>"
-
-    body_bytes = body.encode('ascii')
-    header_bytes = control_headers.format(
-    Rendering = "RenderingControl:1#",
-    option = "GetVolume\"",
-    content_length=len(body_bytes),
-    host=str(host) + ":" + str(AV_port)
-    ).encode('iso-8859-1')
-    payload = header_bytes + body_bytes
+        body_bytes = body.encode('ascii')
+        header_bytes = control_headers.format(
+            Rendering="RenderingControl:1#",
+            option="GetVolume\"",
+            content_length=len(body_bytes),
+            host=str(host) + ":" + str(AV_port)
+        ).encode('iso-8859-1')
+        payload = header_bytes + body_bytes
+        print(payload)
+    else:
+        body = "<?xml version=\"1.0\" encoding=\"utf-8\"?>\
+            <s:Envelope xmlns:s=\"http://schemas.xmlsoap.org/soap/envelope/\" s:encodingStyle=\"http://schemas.xmlsoap.org/soap/encoding/\">\
+            <s:Body>\
+            <u:SetAVTransportURI xmlns:u=\"urn:schemas-upnp-org:service:AVTransport:1\">\
+            <InstanceID>0</InstanceID>\
+            <CurrentURI>http://www.vorbis.com/music/Epoq-Lepidoptera.ogg</CurrentURI>\
+            </u:SetAVTransportURI>\
+            </s:Body>\
+            </s:Envelope>"
+        body_bytes = body.encode('ascii')
+        header_bytes = transport_headers.format(
+            Transport="AVTransport:1#",
+            option="SetAVTransportURI\"",
+            content_length=len(body_bytes),
+            host=str(host) + ":" + str(AV_port)
+        ).encode('iso-8859-1')
+        payload = header_bytes + body_bytes
+        print(payload)
     response = ''
     s = socket.socket()
     try:
